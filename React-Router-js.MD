@@ -1,33 +1,62 @@
 # Package de routage de composant pour React JS
 
-## Version utilisé: React Router V6
+Version utilisé: React Router V6
 
-### Installation
+## Installation
 
+```CMD 
 npm install react-router-dom@6
+```
 
-### Utilisation
+## Utilisation
 
-#### Configuration:
+### Configuration:
 
-##### Import
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
+#### Import
+```JS
+  import {
+    BrowserRouter,
+    Routes,
+    Route,
+  } from "react-router-dom";
+```
 
-###### Routage
+#### Routage
+```JSX
+    <BrowserRouter> 
+        <Routes>
+            <Route path="/" element={<App />}>
+                <Route index element={<Home />} />
+                <Route path="teams" element={<Teams />} >
+                    <Route path=":teamId" element={<Team />} />
+                    <Route path="new" element={<NewTeamForm />} />
+                    <Route index element={<LeagueStandings />} />
+                </Route>
+            </Route>
+        </Routes>
+    </BrowserRouter>
+```
+Les composants filles ***héritent*** les liens de ces parents. 
+Ici, par exemple, on aura:
 
-<BrowserRouter>
-  <Routes>
-    <Route path="/" element={<App />}>
-      <Route index element={<Home />} />
-      <Route path="teams" element={<Teams />}>
-        <Route path=":teamId" element={<Team />} />
-        <Route path="new" element={<NewTeamForm />} />
-        <Route index element={<LeagueStandings />} />
-      </Route>
-    </Route>
-  </Routes>
-</BrowserRouter>
+- `/` comme route de base vers `App`
+  -  `/index` qui appelera `Home`
+  -  `/teams` => `Teams`
+    -  `/teams/:teamId` => `Team`
+    -  `/teams/new` => `NewTeamForm`
+    -  `/teams/index` => `LeagueStandings`
+
+#### Navigation
+Pour naviguer avec des liens cliquables, il faut utiliser `Link`, importé comme:
+
+```JSX
+import { Link } from "react-router-dom";
+```
+
+puis 
+
+```JSX
+    <Link to="/" > Home </Link>
+    <Link to="/teams" > Teams </Link>
+```
+
